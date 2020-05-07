@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "netlify:serve": "netlify-lambda serve functions/src",
+    "netlify:build": "netlify-lambda build functions/src"
   },
   "keywords": [],
   "author": "",
