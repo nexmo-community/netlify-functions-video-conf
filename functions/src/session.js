@@ -26,21 +26,12 @@ exports.handler = async (event, context) => {
         )
 
         let document
-
         if(doesSessionExist) {
             document = await client.query(
                 q.Get(q.Match(q.Index('sessions_by_name'), name))
             )
         } else {
-            OT.createSession(async (error, session) => {
-                if(error) { throw error }
-                document = await client.query(
-                    q.Create(
-                        q.Collection('sessions'), 
-                        { data: { name, id: session.sessionId }}
-                    )
-                )
-            })
+            document = await createSession(name)
         }
 
         const token = await generateToken(document)
@@ -58,6 +49,25 @@ exports.handler = async (event, context) => {
         console.error('Error', e)
         return { headers, statusCode: 500, body: 'Error: ' + e }
     }
+}
+
+const createSession = (name) => {
+    return new Promise((resolve, reject) => {
+        try {
+            OT.createSession(async (error, session) => {
+                if(error) { throw error }
+                const document = await client.query(
+                    q.Create(
+                        q.Collection('sessions'), 
+                        { data: { name, id: session.sessionId }}
+                    )
+                )
+                resolve(document)
+            })
+        } catch(e) {
+            reject(e)
+        }
+    })
 }
 
 const generateToken = async ({ data }) => {
