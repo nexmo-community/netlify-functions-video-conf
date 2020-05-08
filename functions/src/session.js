@@ -33,7 +33,7 @@ exports.handler = async (event, context) => {
         } else {
             document = await createSession(name)
         }
-
+        
         const token = await generateToken(document)
 
         return { 
