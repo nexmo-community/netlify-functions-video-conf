@@ -1,3 +1,4 @@
 [build]
     functions = "./functions/build"
     command = "npm run netlify:build"
+    publish = "client"

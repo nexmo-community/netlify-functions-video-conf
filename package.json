@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "encoding": "^0.1.12",
     "faunadb": "^2.14.0",
     "netlify-lambda": "^1.6.3",
     "opentok": "^2.10.0"
