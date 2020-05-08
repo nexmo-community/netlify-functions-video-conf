@@ -11,7 +11,7 @@ const startCall = () => {
     if(location.hostname == 'localhost' || location.hostname == "127.0.0.1") {
         url = "http://localhost:9000/session"
     } else {
-        url = process.env.URL + "/.netlify/functions/session"
+        url = "https://gifted-edison-422796.netlify.app/.netlify/functions/session"
     }
     fetch(url, { 
         method: "POST",
