@@ -7,7 +7,13 @@ form.addEventListener("submit", event => {
 })
 
 const startCall = () => {
-    fetch('http://localhost:9000/session', { 
+    let url;
+    if(location.hostname == 'localhost' || location.hostname == "127.0.0.1") {
+        url = "http://localhost:9000/session"
+    } else {
+        url = process.env.URL + "/.netlify/functions/session"
+    }
+    fetch(url, { 
         method: "POST",
         body: JSON.stringify({ name: form.elements.name.value })
     }).then(res => {

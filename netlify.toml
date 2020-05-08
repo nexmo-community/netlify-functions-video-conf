@@ -2,3 +2,8 @@
     functions = "./functions/build"
     command = "npm run netlify:build"
     publish = "client"
+
+[template.environment]
+    VONAGE_KEY= "Vonage Video API Key"
+    VONAGE_SECRET= "Vonage Video API Secret"
+    FAUNA_SECRET= "FaunaDB Secret"
