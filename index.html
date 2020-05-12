@@ -21,12 +21,12 @@
 
         let url;
         if(location.hostname == 'localhost' || location.hostname == "127.0.0.1") {
-          url = ""
+          url = "https://localhost:9000/session"
         } else {
           url = "https://epic-banach-dc43d1.netlify.app/.netlify/functions/session"
         }
 
-        fetch("http://localhost:9000/session_blog", { 
+        fetch(url, { 
           method: "POST",
           body: JSON.stringify({ name: form.elements.name.value })
         }).then(res => {
