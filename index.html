@@ -1,0 +1,99 @@
+<html>
+  <head></head>
+  <body>
+    <form id="registration">
+      <input type="text" name="name" placeholder="Enter room name" required />
+      <button>Enter</button>
+    </form>
+
+    <div id="call">
+      <div id="subscriber" class="subscriber"></div>
+      <div id="publisher" class="publisher"></div>
+    </div>
+
+    <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
+    <script>
+      const form = document.getElementById("registration")
+
+      form.addEventListener("submit", event => {
+        event.preventDefault()
+        form.style.display = "none"
+
+        let url;
+        if(location.hostname == 'localhost' || location.hostname == "127.0.0.1") {
+          url = ""
+        } else {
+          url = "https://gifted-edison-422796.netlify.app/.netlify/functions/session"
+        }
+
+        fetch("http://localhost:9000/session_blog", { 
+          method: "POST",
+          body: JSON.stringify({ name: form.elements.name.value })
+        }).then(res => {
+          return res.json();
+        }).then(res => {
+          const { apiKey, sessionId, token } = res;
+
+          const session = OT.initSession(apiKey, sessionId);
+
+          const publisher = OT.initPublisher(
+            "publisher",
+            { insertMode: "append", width: "100%", height: "100%" },
+            handleCallback
+          );
+      
+          session.connect(token, error => {
+            if (error) {
+              handleCallback(error);
+            } else {
+              session.publish(publisher, handleCallback);
+            }
+          });
+      
+          session.on("streamCreated", event => {
+            session.subscribe(
+              event.stream,
+              "subscriber",
+              { insertMode: "append", width: "100%", height: "100%" },
+              handleCallback
+            );
+          });
+        }).catch(handleCallback);
+      })
+
+      // function initializeSession(apiKey, sessionId, token) {
+        // const session = OT.initSession(apiKey, sessionId);
+        // const publisher = OT.initPublisher(
+        //   "publisher",
+        //   { insertMode: "append", width: "100%", height: "100%" },
+        //   handleCallback
+        // );
+    
+        // session.connect(token, error => {
+        //   if (error) {
+        //     handleCallback(error);
+        //   } else {
+        //     session.publish(publisher, handleCallback);
+        //   }
+        // });
+    
+        // session.on("streamCreated", event => {
+        //     session.subscribe(
+        //       event.stream,
+        //       "subscriber",
+        //       { insertMode: "append", width: "100%", height: "100%" },
+        //       handleCallback
+        //     );
+        // });
+      // }
+
+      function handleCallback(error) {
+        if (error) {
+          console.log("error: " + error.message);
+        } else {
+          console.log("callback success");
+        }
+      }
+    </script>
+  </body>
+</html>
