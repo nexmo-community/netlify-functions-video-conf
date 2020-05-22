@@ -4,17 +4,7 @@
 
 This application is a serverless video conferencing application, with a Netlify function to handle session and token creation.
 
-<!-- ## Set Up
-
-Download and install dependencies
-
-```
-git clone https://github.com/nexmo-community/netlify-functions-video-conf
-cd netlify-functions-video-conf
-npm install
-```
-
-Rename `.env.example` to `.env` and populate with details from your [Vonage Video API account](https://tokbox.com/account/user/signup) and [FaunaDB account](https://fauna.com/).  -->
+Find out how to set it up at <https://www.nexmo.com/blog/2020/05/22/build-a-basic-video-call-platform-with-netlify-functions>
 
 ## Code of Conduct
 
